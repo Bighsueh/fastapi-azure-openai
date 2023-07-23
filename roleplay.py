@@ -35,7 +35,7 @@ async def roleplay(temperature: float,
         presence_penalty=0,
         stop=None)
     
-    db.insertJsfon(response)
+    db.insertJson(response)
     
     return response
 
