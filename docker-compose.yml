@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    environment:
+      OPENAI_API_KEY: ""
+      OPENAI_ENDPOINT: ""
+      MONGODB_HOST: ""
+      MONGODB_DATABASE: ""
+      MONGODB_COLLECTION: ""
+    volumes:
+      - ./main.py:/app/main.py
+    ports:
+      - "8000:8000"
