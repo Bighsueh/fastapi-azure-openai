@@ -25,9 +25,11 @@ async def roleplay(temperature: float,
                     roles: List[RoleItem],
                     ):
 
+    messages = [{"role":row.role,"content":row.content} for row in roles]
+
     response = openai.ChatCompletion.create(
         engine="LC-gpt35turbo",
-        messages = [{"role":row.role,"content":row.content} for row in roles],
+        messages = messages,
         temperature=temperature,
         max_tokens=max_tokens,
         top_p=top_p,
@@ -35,7 +37,7 @@ async def roleplay(temperature: float,
         presence_penalty=0,
         stop=None)
     
-    db.insertJson(response)
+    db.insertJson(messages,response)
     
     return response
 
