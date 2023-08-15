@@ -6,7 +6,7 @@ db_host = os.environ.get('MONGODB_HOST')
 target_database = os.environ.get('MONGODB_DATABASE')
 target_collection = os.environ.get('MONGODB_COLLECTION')
 
-def insertJson(messages,json_data):
+def insertJson(purpose,messages,json_data):
     mongo_client = pymongo.MongoClient(db_host)
 
     # 假設你要儲存JSON數據的數據庫名稱為"my_database"
@@ -20,6 +20,7 @@ def insertJson(messages,json_data):
         "object" : json_data["object"],
         "created" : json_data["created"],
         "model" : json_data["model"],
+        "purpose" : purpose,
         "prompt" : messages,
         "choices" : json_data["choices"],
         "usage" : json_data["usage"],

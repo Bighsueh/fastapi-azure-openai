@@ -30,6 +30,7 @@ class RoleItem(BaseModel):
 async def chatGPT(temperature: float,
                     max_tokens: int,
                     top_p: float,
+                    purpose : str,
                     roles: List[RoleItem],
                     ):
 
@@ -45,7 +46,7 @@ async def chatGPT(temperature: float,
         presence_penalty=0,
         stop=None)
     
-    db.insertJson(messages,response)
+    db.insertJson(purpose,messages,response)
     
     return response
 
