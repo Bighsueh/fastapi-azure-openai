@@ -1,4 +1,5 @@
 from fastapi import FastAPI,APIRouter
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel,Field
 from typing import List
 import os
@@ -12,6 +13,14 @@ openai.api_base = os.environ.get("OPENAI_ENDPOINT")
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 app = APIRouter()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class RoleItem(BaseModel):
     role: str
@@ -49,6 +58,34 @@ async def chatGPT(temperature: float,
     db.insertJson(purpose,messages,response)
     
     return response
+
+@app.post(path="/callapi/calTokenLength",summary='計算 token 數量')
+async def calTokenLength(temperature: float,
+                    top_p: float,
+                    purpose : str,
+                    roles: List[RoleItem],
+                    ):
+
+    messages = [{"role":row.role,"content":row.content} for row in roles]
+
+    all_text = " ".join([msg["content"] for msg in messages])
+    words = all_text.split()
+    token_count = len(words)
+
+    response = openai.ChatCompletion.create(
+        engine="LC-gpt35turbo",
+        messages = messages,
+        temperature=temperature,
+        max_tokens=token_count,
+        top_p=top_p,
+        frequency_penalty=0,
+        presence_penalty=0,
+        stop=None)
+    
+    total_count = response['usage']['total_tokens']
+    
+    return total_count
+
 
 
 

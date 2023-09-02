@@ -3,13 +3,27 @@ version: "3"
 services:
   app:
     build: .
+    container_name: openai_fastapi_container
     environment:
-      OPENAI_API_KEY: ""
-      OPENAI_ENDPOINT: ""
-      MONGODB_HOST: ""
-      MONGODB_DATABASE: ""
-      MONGODB_COLLECTION: ""
+      OPENAI_API_KEY: "17f82d1fc6fe4d0ba2a768d8836c3e89"
+      OPENAI_ENDPOINT: "https://qag02.openai.azure.com/"
+      MONGODB_HOST: "mongodb://mongodb_container:27017/"
+      MONGODB_DATABASE: "conversationdb"
+      MONGODB_COLLECTION: "learning_companion"
     volumes:
       - ./main.py:/app/main.py
     ports:
       - "8000:8000"
+    networks:
+      - learning_companion_network
+
+  mongodb:
+    image: mongo
+    container_name: mongodb_container
+    ports:
+      - "27017:27017"
+    networks:
+      - learning_companion_network
+
+networks:
+  learning_companion_network:

@@ -11,7 +11,7 @@ COPY . /app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 開放 FastAPI 應用程式使用的連接埠 (預設是 8000)
-EXPOSE 8000
+EXPOSE 8001
 
 # 執行 FastAPI 應用程式
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
