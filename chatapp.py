@@ -14,14 +14,6 @@ openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 app = APIRouter()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 class RoleItem(BaseModel):
     role: str
     content: str
@@ -35,7 +27,7 @@ class RoleItem(BaseModel):
         }
 
 
-@app.post(path="/callapi/chatGPT",summary='ChatGPT聊天功能')
+@app.api_route(path="/callapi/chatGPT",summary='ChatGPT聊天功能',methods=["GET", "POST"] )
 async def chatGPT(temperature: float,
                     max_tokens: int,
                     top_p: float,
@@ -59,7 +51,7 @@ async def chatGPT(temperature: float,
     
     return response
 
-@app.post(path="/callapi/calTokenLength",summary='計算 token 數量')
+@app.api_route(path="/callapi/calTokenLength",summary='計算 token 數量',methods=["GET", "POST"])
 async def calTokenLength(temperature: float,
                     top_p: float,
                     purpose : str,
