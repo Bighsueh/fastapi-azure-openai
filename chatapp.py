@@ -27,7 +27,7 @@ class RoleItem(BaseModel):
         }
 
 
-@app.api_route(path="/callapi/chatGPT",summary='ChatGPT聊天功能',methods=["GET", "POST"] )
+@app.api_route(path="/callapi/chatGPT",summary='ChatGPT聊天功能',methods=["POST"] )
 async def chatGPT(temperature: float,
                     max_tokens: int,
                     top_p: float,
@@ -51,7 +51,7 @@ async def chatGPT(temperature: float,
     
     return response
 
-@app.api_route(path="/callapi/calTokenLength",summary='計算 token 數量',methods=["GET", "POST"])
+@app.api_route(path="/callapi/calTokenLength",summary='計算 token 數量',methods=["POST"])
 async def calTokenLength(temperature: float,
                     top_p: float,
                     purpose : str,
