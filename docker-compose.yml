@@ -18,7 +18,7 @@ services:
       - learning_companion_network
 
   mongodb:
-    image: mongo:4.9-rc-windowsservercore-ltsc2016
+    image: mongo:4.9-rc
     container_name: mongodb_container
     ports:
       - "27017:27017"
