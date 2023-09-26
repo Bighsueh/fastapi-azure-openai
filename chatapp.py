@@ -81,7 +81,7 @@ async def calTokenLength(temperature: float,
 @app.api_route(path="/callapi/test",summary='測試功能',methods=["POST"] )
 async def chatGPT():
 
-    return "test"
+    return {"data": {"choices": [{"message": "test"}]}}
 
 
 
