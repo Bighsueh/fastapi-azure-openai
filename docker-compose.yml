@@ -13,7 +13,7 @@ services:
     volumes:
       - ./main.py:/app/main.py
     ports:
-      - "8000:8000"
+      - "80:8000"
     networks:
       - learning_companion_network
 
