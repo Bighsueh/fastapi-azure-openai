@@ -7,23 +7,17 @@ services:
     environment:
       OPENAI_API_KEY: "17f82d1fc6fe4d0ba2a768d8836c3e89"
       OPENAI_ENDPOINT: "https://qag02.openai.azure.com/"
-      MONGODB_HOST: "mongodb://mongodb_container:27017/"
+      MONGODB_HOST: "mongodb://mongodb_container:27020/"
       MONGODB_DATABASE: "conversationdb"
       MONGODB_COLLECTION: "learning_companion"
     volumes:
       - ./main.py:/app/main.py
     ports:
       - "80:8000"
-    networks:
-      - learning_companion_network
 
   mongodb:
     image: mongo:4.4.9
     container_name: mongodb_container
     ports:
-      - "27017:27017"
-    networks:
-      - learning_companion_network
+      - "127.0.0.1:27017:27017"
 
-networks:
-  learning_companion_network:
