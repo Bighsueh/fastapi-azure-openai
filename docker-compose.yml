@@ -7,7 +7,7 @@ services:
     environment:
       OPENAI_API_KEY: "17f82d1fc6fe4d0ba2a768d8836c3e89"
       OPENAI_ENDPOINT: "https://qag02.openai.azure.com/"
-      MONGODB_HOST: "mongodb://mongodb_container:27020/"
+      MONGODB_HOST: "mongodb://mongodb_container:27017/"
       MONGODB_DATABASE: "conversationdb"
       MONGODB_COLLECTION: "learning_companion"
     volumes:
