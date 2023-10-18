@@ -21,3 +21,16 @@ services:
     ports:
       - "127.0.0.1:27017:27017"
 
+  public-mongo:
+    image: mongo:4.4.9
+    container_name: public_mongodb_container
+    ports:
+      - "27020:27017"
+
+  backup_mongo:
+    build:
+      context: ./backup_mongo
+    container_name: backup_mongo
+    links:
+      - mongodb:mongo_source
+      - public-mongo:mongo_target
