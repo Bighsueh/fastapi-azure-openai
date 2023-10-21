@@ -27,28 +27,34 @@ class RoleItem(BaseModel):
         }
 
 
-@app.api_route(path="/callapi/chatGPT",summary='ChatGPT聊天功能',methods=["POST"] )
+@app.api_route(path="/callapi/chatGPT", summary='ChatGPT聊天功能', methods=["POST"])
 async def chatGPT(temperature: float,
-                    max_tokens: int,
-                    top_p: float,
-                    purpose : str,
-                    roles: List[RoleItem],
-                    ):
+                  max_tokens: int,
+                  top_p: float,
+                  roles: List[RoleItem],
+                  frequency_penalty: float,
+                  presence_penalty: float,
+                  stop: str,
+                  past_messages: int,
+                  purpose: str,
+                  ):
 
-    messages = [{"role":row.role,"content":row.content} for row in roles]
+    messages = [{"role": row.role, "content": row.content} for row in roles[-past_messages:]]
+
+    stop_list = stop.split('-') if stop else None
 
     response = openai.ChatCompletion.create(
         engine="LC-gpt35turbo",
-        messages = messages,
+        messages=messages,
         temperature=temperature,
         max_tokens=max_tokens,
         top_p=top_p,
-        frequency_penalty=0,
-        presence_penalty=0,
-        stop=None)
-    
-    db.insertJson(purpose,messages,response)
-    
+        frequency_penalty=frequency_penalty,
+        presence_penalty=presence_penalty,
+        stop=stop_list)
+
+    db.insertJson(purpose, messages, response)
+
     return response
 
 @app.api_route(path="/callapi/calTokenLength",summary='計算 token 數量',methods=["POST"])
